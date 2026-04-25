@@ -47,7 +47,11 @@ export const loginUser = async (data) => {
 
     // User is valid now generate a JWT token and return it to the client
 
-    const token = generateToken({ id: user.id, email: user.email });
+    const token = generateToken({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    });
     return { token, user };
   } catch (error) {
     return error.message;
