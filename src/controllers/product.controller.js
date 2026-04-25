@@ -23,6 +23,7 @@ export const createProduct = async (req, res) => {
 export const getAllProducts = async (req, res) => {
   try {
     const products = await getAllProductsService(req.query);
+
     res.status(200).json({
       success: true,
       message: "Products retrieved successfully",
