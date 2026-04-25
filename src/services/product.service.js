@@ -9,10 +9,21 @@ export const createProductService = async (data) => {
   }
 };
 
-export const getAllProductsService = async () => {
+export const getAllProductsService = async (query) => {
   try {
-    const products = await Product.findAll();
-    return products;
+    const page = query.page || 1;
+    const limit = query.limit || 10;
+    const offset = (page - 1) * limit; // skip the first (page-1)*limit records
+    const products = await Product.findAndCountAll({
+      limit,
+      offset,
+    });
+    return {
+      total: products.count,
+      page: page,
+      totalPages: Math.ceil(products.count / limit),
+      products: products.rows,
+    };
   } catch (error) {
     return error.message;
   }
