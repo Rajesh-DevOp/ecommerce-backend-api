@@ -1,9 +1,10 @@
 import bcrypt from "bcrypt";
 import User from "../models/user.model.js";
 import { generateToken } from "../utils/jwt.js";
+
 export const registerUser = async (userdata) => {
   // Implementation for registering a new user
-  const { name, email, password } = userdata;
+  const { name, email, password, role } = userdata;
 
   console.log("Registering user:", { name, email });
 
@@ -23,6 +24,7 @@ export const registerUser = async (userdata) => {
     name,
     email,
     password: hashedPassword,
+    role,
   });
   console.log("User created:", user);
   // Return a success message or the created user object

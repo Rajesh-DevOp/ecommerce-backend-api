@@ -2,7 +2,7 @@ import { registerUser, loginUser } from "../services/auth.service.js";
 export const register = async (req, res) => {
   try {
     const data = req.body;
-
+    console.log("Registering user with data:", data);
     const user = await registerUser(data);
 
     console.log("User registered successfully");
