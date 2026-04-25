@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import User from "../models/user.model.js";
+import { generateToken } from "../utils/jwt.js";
 export const registerUser = async (userdata) => {
   // Implementation for registering a new user
   const { name, email, password } = userdata;
@@ -26,4 +27,29 @@ export const registerUser = async (userdata) => {
   console.log("User created:", user);
   // Return a success message or the created user object
   return user;
+};
+
+export const loginUser = async (data) => {
+  try {
+    const { email, password } = data;
+
+    // check if the user exists in the database
+    const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      throw new Error("Invalid credentials");
+    }
+    // compare the provided password with the hashed password in the database
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new Error("Invalid credentials");
+    }
+
+    // User is valid now generate a JWT token and return it to the client
+
+    const token = generateToken({ id: user.id, email: user.email });
+    return { token, user };
+  } catch (error) {
+    return error.message;
+  }
 };

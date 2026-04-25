@@ -1,8 +1,7 @@
-import { registerUser } from "../services/auth.service.js";
+import { registerUser, loginUser } from "../services/auth.service.js";
 export const register = async (req, res) => {
   try {
     const data = req.body;
-    console.log("Request body:", data);
 
     const user = await registerUser(data);
 
@@ -18,6 +17,28 @@ export const register = async (req, res) => {
       statusCode: 500,
       success: false,
       message: "Error occurred while registering user",
+    });
+  }
+};
+
+export const login = async (req, res) => {
+  try {
+    const data = req.body;
+    const { token, user } = await loginUser(data);
+    const { password, ...safeUser } = user.toJSON();
+
+    return res.status(200).json({
+      success: true,
+      message: "Login successful",
+      data: {
+        user: safeUser,
+        token,
+      },
+    });
+  } catch (error) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
     });
   }
 };
