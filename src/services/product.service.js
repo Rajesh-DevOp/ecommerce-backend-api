@@ -36,3 +36,14 @@ export const getAllProductsService = async (query) => {
     return error.message;
   }
 };
+
+// export const getAllProductsService = async (query) => {
+//     const products = await Product.findAll({
+//         include: {
+//             model: Category,
+//             as: 'category'
+//         }
+//     });
+
+//     return products;
+// };
