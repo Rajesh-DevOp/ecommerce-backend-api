@@ -29,4 +29,11 @@ const User = sequelize.define(
     timestamps: true,
   },
 );
+
+User.belongsToMany(Product, {
+  through: "CartItem",
+  foreignKey: "userId",
+  as: "cart",
+});
+
 export default User;
