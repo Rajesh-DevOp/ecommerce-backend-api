@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db.config.js";
-
+import Order from "./order.model.js";
 const User = sequelize.define(
   "user",
   {
@@ -35,5 +35,7 @@ User.belongsToMany(Product, {
   foreignKey: "userId",
   as: "cart",
 });
-
+User.hasMany(Order, {
+  foreignKey: "userId",
+});
 export default User;
