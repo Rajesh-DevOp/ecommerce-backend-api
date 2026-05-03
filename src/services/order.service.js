@@ -74,3 +74,28 @@ export const placeOrderService = async (userId) => {
     throw error;
   }
 };
+
+export const getOrdersService = async (userId) => {
+  try {
+    const orders = await Order.findAll({
+      where: {
+        userId,
+      },
+      include: [
+        {
+          model: OrderItem,
+          as: "items",
+          include: {
+            model: Product,
+            attributes: ["id", "name", "price"],
+          },
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+    });
+
+    return orders;
+  } catch (error) {
+    throw error;
+  }
+};
