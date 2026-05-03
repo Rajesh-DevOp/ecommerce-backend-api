@@ -38,4 +38,5 @@ Product.belongsToMany(User, {
   foreignKey: "productId",
   as: "users",
 });
+
 export default Product;

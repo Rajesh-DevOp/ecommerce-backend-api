@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
 import Order from "./order.model.js";
+import Product from "./product.model.js";
 const OrderItem = sequelize.define(
   "OrderItem",
   {
@@ -19,5 +20,9 @@ const OrderItem = sequelize.define(
 );
 OrderItem.belongsTo(Order, {
   foreignKey: "orderId",
+  as: "item",
+});
+OrderItem.belongsTo(Product, {
+  foreignKey: "productId",
 });
 export default OrderItem;
