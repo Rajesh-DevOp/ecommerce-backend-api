@@ -9,7 +9,12 @@ const Order = sequelize.define(
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
+    status: {
+      type: DataTypes.ENUM("PENDING", "PAID", "FAILED"),
+      defaultValue: "PENDING",
+    },
   },
+
   { timestamps: true },
 );
 Order.belongsTo(User, { foreignKey: "userId" });
